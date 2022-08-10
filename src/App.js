@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import MoviesList from './components/MoviesList';
 import './App.css';
 
@@ -7,7 +7,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function fetchMovieHandler() {
+  const fetchMovieHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -36,8 +36,11 @@ function App() {
     // 응답 성공 또는 실패에 따라 각각의 결과를 화면에 보여주어야 하기 때문에, 
     // 맨 마지막에 isLoading 상태를 false로 바꾸어 loading indicator가 보이지 않게 합니다.
     setIsLoading(false);
-  }
-  // state를 변경하기 전에 원하는 속성들로만 이루어진 객체를 만듭니다
+  }, [])
+
+  useEffect(() => {
+    fetchMovieHandler();
+  }, [fetchMovieHandler])
 
   return (
     <React.Fragment>

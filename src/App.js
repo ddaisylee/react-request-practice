@@ -4,7 +4,9 @@ import AddMovie from './components/AddMovie';
 import './App.css';
 
 function App() {
+  // 영화 데이터
   const [movies, setMovies] = useState([]);
+  // 로딩 여부에 따라 로딩 화면을 조건부렌더링하도록 하는 상태
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,7 +16,7 @@ function App() {
     setError(null);
     try {
       const res = await fetch('https://react-request-practice-52ca0-default-rtdb.firebaseio.com/movies.json');
-      // status를 사용하여 요청 에 대한 응답이 실패했는 지에 따라 에러 메시지를 생성합니다.
+      // status를 사용하여 요청에 대한 응답이 실패했는 지에 따라 에러 메시지를 생성합니다.
       // 에러에 대한 조건문을 만족하면 이후 try문은 실행되지 않고 catch 문으로 넘어갑니다. (error를 캐치)
       if (!res.status) {
         throw new Error('Error...');
@@ -63,6 +65,7 @@ function App() {
       }
       const data = await res.json();
       console.log(data);
+      fetchMovieHandler();
     }
     catch (error) {
       setError(error.message);
